@@ -1,0 +1,99 @@
+<style>
+    .tool_bar {
+        padding: 6px 6px;
+        position: relative;
+        display: inline-block;
+        width: auto;
+        background: #F2F2F2;
+        border: 1px solid #F5F5F5;
+        box-sizing: border-box;
+        box-shadow: 3px 3px 9px -3px rgba(0, 0, 0, 0.5);
+        border-radius: 6px;
+    }
+
+    .tool_bar .whole_icon {
+        position: relative;
+        width: 36px;
+        height: 36px;
+        display: inline-block;
+        margin: 0;
+    }
+
+    .tool_bar .whole_icon .icon_frame {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 36px;
+        background: rgba(222, 222, 222, 0);
+        border-radius: 99px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 100%;
+    }
+
+    .tool_bar .whole_icon:hover .icon_frame {
+        background: rgba(222, 222, 222, 1);
+    }
+
+    .tool_bar .whole_icon .icon_frame .inner_icon {
+        width: 18px;
+        height: 18px;
+        background: #717171;
+        margin: 0;
+    }
+
+    .tool_bar .whole_icon .badge_frame {
+        justify-content: center;
+        align-items: center;
+        padding: 2px 6px 1px;
+        position: absolute;
+        top: 25%;
+        left: 75%;
+        transform: translateX(-50%) translateY(-50%);
+        background: #4D4D4D;
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 99px;
+    }
+
+    .tool_bar .whole_icon .badge_frame .badge_text {
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-5%);
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 11px;
+        text-align: center;
+        color: #FFFFFF;
+        margin: 0;
+    }
+
+    .template {
+        display: none;
+    }
+</style>
+<body></body>
+<script>
+    function ToolBar(content) {
+        return `<div class="tool_bar">${content}</div>`;
+    }
+
+    function Tool(badgeText) {
+        return `<div class="whole_icon">
+                    <div class="icon_frame">
+                        <div class="inner_icon">=</div>
+                    </div>
+                    <div class="badge_frame">
+                        <div class="badge_text">
+                                ${badgeText}
+                        </div>
+                    </div>
+                </div>`;
+    }
+
+    document.body.innerHTML = ToolBar(Tool("99+") + Tool("1234"));
+
+</script>

@@ -1,14 +1,13 @@
 <style>
     .tool_bar {
-        padding: 6px 6px;
-        position: relative;
+        padding: 2px 0 0 0;
         display: inline-block;
         width: auto;
         background: #F2F2F2;
         border: 1px solid #F5F5F5;
         box-sizing: border-box;
         box-shadow: 3px 3px 9px -3px rgba(0, 0, 0, 0.5);
-        border-radius: 6px;
+        border-radius: 3px;
     }
 
     .tool_bar .whole_icon {
@@ -17,6 +16,7 @@
         height: 36px;
         display: inline-block;
         margin: 0;
+        margin: 4px 4px 0 4px;
     }
 
     .tool_bar .whole_icon .icon_frame {
@@ -27,9 +27,7 @@
         width: 36px;
         height: 36px;
         background: rgba(222, 222, 222, 0);
-        border-radius: 99px;
-        text-align: center;
-        vertical-align: middle;
+        border-radius: 100%;
         line-height: 100%;
     }
 
@@ -37,63 +35,57 @@
         background: rgba(222, 222, 222, 1);
     }
 
-    .tool_bar .whole_icon .icon_frame .inner_icon {
-        width: 18px;
-        height: 18px;
-        background: #717171;
-        margin: 0;
-    }
 
     .tool_bar .whole_icon .badge_frame {
-        justify-content: center;
-        align-items: center;
-        padding: 2px 6px 1px;
+
         position: absolute;
-        top: 25%;
-        left: 75%;
-        transform: translateX(-50%) translateY(-50%);
+        top:0;
+        right:0;
+        padding: 1px;
+        transform: translateX(20%) translateY(-20%);
         background: #4D4D4D;
         border: 1px solid rgba(255, 255, 255, 0.75);
         border-radius: 99px;
     }
 
     .tool_bar .whole_icon .badge_frame .badge_text {
-        position: relative;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-5%);
-        font-family: Roboto;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 11px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: #FFFFFF;
-        margin: 0;
+        margin: 1px;
+        padding: 1px;
+        font-size: 11px;
+        min-height: 16px;
+        min-width: 16px;
+        user-select: none;
     }
 
-    .template {
-        display: none;
-    }
 </style>
 <body></body>
 <script>
-    function ToolBar(content) {
-        return `<div class="tool_bar">${content}</div>`;
-    }
+    const Attrs = (a) => " " + Object.entries(a).map(([k, v]) => `${k}="${v}"`).join(" ");
+    const Tag = (tag, content, attrs) => `<${tag}${Attrs(attrs)}>${content}</${tag}>`;
+    const Open = (tag, attrs) => `<${tag}${Attrs(attrs)}/>`;
+    const Div = (content, attrs) => Tag("div", content, attrs);
 
-    function Tool(badgeText) {
-        return `<div class="whole_icon">
-                    <div class="icon_frame">
-                        <div class="inner_icon">=</div>
-                    </div>
-                    <div class="badge_frame">
-                        <div class="badge_text">
-                                ${badgeText}
-                        </div>
-                    </div>
-                </div>`;
-    }
+    const SVG = (content, attrs) => Tag("svg", content, attrs);
+    const Rect = (x, y, width, height) => Open("rect", {x: x, y: y, width: width, height: height});
+    const SVGA = {width: "1em", height: "1em", viewBox: "0 0 24 24", fill: "#777777"};
+    const IconSVG = () => SVG(Rect(0, 0, 24, 4) + Rect(0, 6, 24, 4) + Rect(0, 12, 24, 4) + Rect(0, 18, 24, 4), SVGA);
 
-    document.body.innerHTML = ToolBar(Tool("99+") + Tool("1234"));
+    const WholeIcon = (content) => Div(content, {"class": "whole_icon"});
+    const IconFrame = (content) => Div(content, {"class": "icon_frame"});
+    const BadgeFrame = (content) => Div(content, {"class": "badge_frame"});
+    const BadgeText = (content) => Div(content, {"class": "badge_text"});
+
+    const Tool = (badgeText) => WholeIcon(
+        BadgeFrame(BadgeText(badgeText))
+        +
+        IconFrame(IconSVG())
+    );
+    const ToolBar = (content) => Div(content, {"class": "tool_bar"});
+
+    document.body.innerHTML = ToolBar(Tool("1") + Tool("99+"));
 
 </script>
